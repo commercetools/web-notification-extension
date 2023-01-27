@@ -68,7 +68,3 @@ be performed manually when developing locally.
 Install dependencies:
 
    npm install
-
-## Deploying
-`gcloud functions logs read twilio-access-token-generator`
-`gcloud functions deploy twilio-access-token-generator --runtime nodejs18 --trigger-http --allow-unauthenticated --build-env-vars-file .env.yaml --entry-point twilioAccessTokenGenerator`
