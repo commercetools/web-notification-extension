@@ -43,6 +43,7 @@ const initialize = async () => {
   });
 
   client.on("tokenAboutToExpire", () => {
+    console.log('IS ABOUT to expire');
     if (username && password) {
       getToken().then((token) => {
         client.updateToken(token);
@@ -51,6 +52,7 @@ const initialize = async () => {
   });
 
   client.on("tokenExpired", () => {
+    console.log('expired');
     if (username && password) {
       getToken(username, password).then((token) => {
         client.updateToken(token);

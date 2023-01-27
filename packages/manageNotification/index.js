@@ -2,8 +2,10 @@ const { apiRoot } = require("./api-client");
 const { sendNotification } = require("./notification");
 const { initialize } = require("./twilio-client");
 
-let client;
-initialize().then(c => client = c);
+const clientPromise = (() => {
+  return initialize().then(c => c);
+})();
+
 
 const SUPPORTED_MESSAGE_TYPES = {
   StagedQuoteCreated: {
@@ -65,7 +67,7 @@ const createNotification = async (message) => {
   return getNotificationText(message);
 };
 
-exports.commerceNotificationToTwilio = async (event, context) => {
+exports.commerceNotificationToTwilio = commerceNotificationToTwilio = async (event, context) => {
   const message = parseMessage(event);
   const customerIdentity = await extractIdentity(message);
   console.log('customer identity', customerIdentity);
@@ -73,5 +75,5 @@ exports.commerceNotificationToTwilio = async (event, context) => {
     return null;
   }
   const notification = await createNotification(message);
-  await sendNotification(client, notification, customerIdentity);
+  await sendNotification(clientPromise, notification, customerIdentity);
 };
