@@ -24,14 +24,15 @@ Populate the constant `SUPPORTED_MESSAGE_TYPES` in index.js. The schema for this
 SUPPORTED_MESSAGE_TYPES = {
   ['message-type-name']: {
     identityExtractor: () => {},
-    getNotificationText: () => {}
+    getNotificationBody: () => {}
+    getNotificationSubject: () => {}
   },
   ...
 }
 ```
 - message-type-name is drived from the [commercetools docs](https://docs.commercetools.com/api/projects/messages)
 - identityExtractor is a method to extract identity (email address) of the recipient.
-- getNotificationText is a method to build the notification message
+- getNotificationBody is a method to build the notification message
 
 
 ## Setup

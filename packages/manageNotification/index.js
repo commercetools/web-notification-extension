@@ -3,9 +3,8 @@ const { sendNotification } = require("./notification");
 const { initialize } = require("./twilio-client");
 
 const clientPromise = (() => {
-  return initialize().then(c => c);
+  return initialize().then((c) => c);
 })();
-
 
 const SUPPORTED_MESSAGE_TYPES = {
   StagedQuoteCreated: {
@@ -19,10 +18,13 @@ const SUPPORTED_MESSAGE_TYPES = {
         .then((res) => res.body);
       return customer.email;
     },
-    getNotificationText: (message) => {
+    getNotificationBody: (message) => {
       return `<div>
         Your quote has been accepted. You can view it <a href="/account?id=${message.stagedQuote.quoteRequest.id}#quotes">here</a>
       </div>`;
+    },
+    getNotificationSubject: (message) => {
+      return `Your quote request has been accepted and under review`;
     },
   },
 };
@@ -62,15 +64,23 @@ const createNotification = async (message) => {
   if (!isMessageTypeSupported(messageType)) {
     return null;
   }
-  const getNotificationText =
-    SUPPORTED_MESSAGE_TYPES[messageType].getNotificationText;
-  return getNotificationText(message);
+  const getNotificationBody =
+    SUPPORTED_MESSAGE_TYPES[messageType].getNotificationBody;
+  const getNotificationSubject =
+    SUPPORTED_MESSAGE_TYPES[messageType].getNotificationSubject;
+  return {
+    body: getNotificationBody(message),
+    subject: getNotificationSubject(message),
+  };
 };
 
-exports.commerceNotificationToTwilio = commerceNotificationToTwilio = async (event, context) => {
+exports.commerceNotificationToTwilio = commerceNotificationToTwilio = async (
+  event,
+  context
+) => {
   const message = parseMessage(event);
   const customerIdentity = await extractIdentity(message);
-  console.log('customer identity', customerIdentity);
+  console.log("customer identity", customerIdentity);
   if (!customerIdentity) {
     return null;
   }

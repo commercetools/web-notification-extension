@@ -34,6 +34,6 @@ const sendNotification = async (clientPromise, message, identity) => {
     console.log("joined my self");
   }
   console.log("sending message");
-  await conversation.sendMessage(message);
+  await conversation.sendMessage(message.body, { subject: message.subject });
 };
 exports.sendNotification = sendNotification;
