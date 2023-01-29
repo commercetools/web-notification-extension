@@ -1,4 +1,4 @@
-const { apiRoot } = require("./api-client");
+const { SUPPORTED_MESSAGE_TYPES } = require("./message-types");
 const { sendNotification } = require("./notification");
 const { initialize } = require("./twilio-client");
 
@@ -6,28 +6,6 @@ const clientPromise = (() => {
   return initialize().then((c) => c);
 })();
 
-const SUPPORTED_MESSAGE_TYPES = {
-  StagedQuoteCreated: {
-    identityExtractor: async (message) => {
-      const customerReference = message.stagedQuote.customer;
-      const customer = await apiRoot
-        .customers()
-        .withId({ ID: customerReference.id })
-        .get()
-        .execute()
-        .then((res) => res.body);
-      return customer.email;
-    },
-    getNotificationBody: (message) => {
-      return `<div>
-        Your quote has been accepted. You can view it <a href="/account?id=${message.stagedQuote.quoteRequest.id}#quotes">here</a>
-      </div>`;
-    },
-    getNotificationSubject: (message) => {
-      return `Your quote request has been accepted and under review`;
-    },
-  },
-};
 
 const parseMessage = (data) => {
   const pubSubMessage = data;
@@ -44,6 +22,14 @@ const extractMessageType = (message) => {
   return message.type;
 };
 
+const predicatePassed = (message, messageType) => {
+  console.log(SUPPORTED_MESSAGE_TYPES[messageType].predicate);
+  if (!SUPPORTED_MESSAGE_TYPES[messageType].predicate){
+    return true;
+  }
+  return SUPPORTED_MESSAGE_TYPES[messageType].predicate(message);
+}
+
 const isMessageTypeSupported = (messageType) => {
   return Object.keys(SUPPORTED_MESSAGE_TYPES).includes(messageType);
 };
@@ -51,6 +37,10 @@ const isMessageTypeSupported = (messageType) => {
 const extractIdentity = async (message) => {
   const messageType = extractMessageType(message);
   if (!isMessageTypeSupported(messageType)) {
+    return null;
+  }
+  if (!predicatePassed(message, messageType)) {
+    console.log('predicate failed');
     return null;
   }
   const identityExtractor =
