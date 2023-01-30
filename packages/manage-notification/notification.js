@@ -27,12 +27,23 @@ const sendNotification = async (clientPromise, message, identity) => {
   if (!conversation) {
     console.log("no conversation found");
     conversation = await createConversation(client, identity);
-    // console.log("new conversation", conversation);
-    await conversation.add(identity);
-    console.log("added customer");
-    await conversation.join();
-    console.log("joined my self");
   }
+  const participantsCount = await conversation.getParticipantsCount();
+  if (participantsCount < 2) {
+    try {
+      await conversation.add(identity);
+      console.log("added customer");
+    } catch {
+      console.log("customer already exists");
+    }
+    try {
+      await conversation.join();
+      console.log("joined my self");
+    } catch {
+      console.log("I'm already there");
+    }
+  }
+
   console.log("sending message");
   await conversation.sendMessage(message.body, { subject: message.subject });
 };
