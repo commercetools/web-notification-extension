@@ -1,19 +1,20 @@
 // https://www.twilio.com/docs/conversations/create-tokens
-'use strict';
+"use strict";
 
-const AccessToken = require('twilio').jwt.AccessToken;
-const { ClientBuilder } = require('@commercetools/sdk-client-v2');
-const { createApiBuilderFromCtpClient } = require("@commercetools/platform-sdk");
-const fetch = require('node-fetch');
+const AccessToken = require("twilio").jwt.AccessToken;
+const { ClientBuilder } = require("@commercetools/sdk-client-v2");
+const {
+  createApiBuilderFromCtpClient,
+} = require("@commercetools/platform-sdk");
+const fetch = require("node-fetch");
 
-const { clientId, clientSecret, host, oauthHost, projectKey } =
-{
+const { clientId, clientSecret, host, oauthHost, projectKey } = {
   clientId: process.env["CTP_CLIENT_ID"] || "",
   clientSecret: process.env["CTP_CLIENT_SECRET"] || "",
   projectKey: process.env["CTP_PROJECT_KEY"] || "",
   oauthHost: process.env["CTP_AUTH_URL"] || "",
-  host: process.env["CTP_API_URL"] || ""
-}
+  host: process.env["CTP_API_URL"] || "",
+};
 
 function createCTPCLient() {
   const authMiddlewareOptions = {
@@ -36,28 +37,31 @@ function createCTPCLient() {
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
 
-  return createApiBuilderFromCtpClient(client)
-    .withProjectKey({ projectKey });
+  return createApiBuilderFromCtpClient(client).withProjectKey({ projectKey });
 }
 
 const apiRoot = createCTPCLient();
 
 const authenticate = async (username, password) => {
-  return apiRoot.login()
+  return apiRoot
+    .login()
     .post({
       body: {
         email: username,
-        password: password
-      }
-    }).execute().then((response) => {
+        password: password,
+      },
+    })
+    .execute()
+    .then((response) => {
       return !!response.body.customer;
-    }).catch(e => {
+    })
+    .catch((e) => {
       return false;
     });
-}
+};
 exports.twilioAccessTokenGenerator = async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   const identity = req.query.identity;
   const password = req.query.password;
@@ -65,7 +69,7 @@ exports.twilioAccessTokenGenerator = async (req, res) => {
 
   if (!authenticated) {
     res.statusCode = 401;
-    res.send('unauthorized');
+    res.send("unauthorized");
     return;
   }
 
@@ -81,7 +85,7 @@ exports.twilioAccessTokenGenerator = async (req, res) => {
     twilioAccountSid,
     twilioApiKey,
     twilioApiSecret,
-    { identity: identity, ttl: 3600 }
+    { identity: identity, ttl: 60 * 60 * 3 }
   );
 
   const chatGrant = new AccessToken.ChatGrant({
