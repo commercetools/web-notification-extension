@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { authenticate } from '../src/auth/index';
 
@@ -18,6 +19,7 @@ describe('authenticate', () => {
       }),
     };
 
+    // @ts-ignore
     require('../src/client/create.client').createApiRoot.mockReturnValue(
       mockApiRoot
     );

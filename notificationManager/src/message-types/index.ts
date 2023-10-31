@@ -1,4 +1,8 @@
-import { QuoteCreatedMessagePayload, QuoteRequestStateChangedMessage, StagedQuoteCreatedMessagePayload } from '@commercetools/platform-sdk';
+import {
+  QuoteCreatedMessagePayload,
+  QuoteRequestStateChangedMessage,
+  StagedQuoteCreatedMessagePayload,
+} from '@commercetools/platform-sdk';
 import { createApiRoot } from '../client/create.client';
 import { SupportedMessageTypes } from '../interfaces/message.interface';
 
@@ -53,7 +57,8 @@ export const SUPPORTED_MESSAGE_TYPES: SupportedMessageTypes = {
     },
   },
   QuoteRequestStateChanged: {
-    predicate: (message: QuoteRequestStateChangedMessage) => message.quoteRequestState === 'Rejected',
+    predicate: (message: QuoteRequestStateChangedMessage) =>
+      message.quoteRequestState === 'Rejected',
     identityExtractor: async (message: QuoteRequestStateChangedMessage) => {
       const quoteRequestId = message.resource.id;
       if (!quoteRequestId) {

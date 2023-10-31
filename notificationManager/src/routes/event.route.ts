@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { logger } from '../utils/logger.utils';
 import { extractIdentity, parseMessage } from '../message';
-import { createNotification, initializeClient, sendNotification } from '../notification';
+import {
+  createNotification,
+  initializeClient,
+  sendNotification,
+} from '../notification';
 
 const serviceRouter = Router();
 
