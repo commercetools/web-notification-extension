@@ -1,4 +1,5 @@
 import { createApiRoot } from '../client/create.client';
+import { logger } from '../utils/logger.utils';
 
 export const authenticate = async (username: string, password: string) => {
   return createApiRoot()
@@ -14,6 +15,7 @@ export const authenticate = async (username: string, password: string) => {
       return !!response.body.customer;
     })
     .catch((e) => {
+      logger.error(e);
       return false;
     });
 };

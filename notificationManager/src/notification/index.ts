@@ -2,12 +2,13 @@
 import { extractMessageType, isMessageTypeSupported } from '../message';
 import { SUPPORTED_MESSAGE_TYPES } from '../message-types';
 import { initializeTwilio } from '../twilio';
+import { logger } from '../utils/logger.utils';
 
 export const initializeClient = (() => {
-    return initializeTwilio().then((c) => c);
-  })();
+  return initializeTwilio().then((c) => c);
+})();
 const findConversation = async (client: any, identity: any) => {
-  console.log('getting conv');
+  logger.info('getting conv');
   try {
     const conversation = await client.getConversationByUniqueName(identity);
     return conversation;
@@ -30,33 +31,33 @@ export const sendNotification = async (
   identity: any
 ) => {
   if (!clientPromise) {
-    console.log('No client');
+    logger.info('No client');
     return;
   }
   const client = await clientPromise;
 
   let conversation = await findConversation(client, identity);
   if (!conversation) {
-    console.log('no conversation found');
+    logger.info('no conversation found');
     conversation = await createConversation(client, identity);
   }
   const participantsCount = await conversation.getParticipantsCount();
   if (participantsCount < 2) {
     try {
       await conversation.add(identity);
-      console.log('added customer');
+      logger.info('added customer');
     } catch {
-      console.log('customer already exists');
+      logger.info('customer already exists');
     }
     try {
       await conversation.join();
-      console.log('joined my self');
+      logger.info('joined my self');
     } catch {
-      console.log("I'm already there");
+      logger.info("I'm already there");
     }
   }
 
-  console.log('sending message');
+  logger.info('sending message');
   await conversation.sendMessage(message.body, { subject: message.subject });
 };
 exports.sendNotification = sendNotification;
