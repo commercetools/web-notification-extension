@@ -1,5 +1,5 @@
 deployAs:
-  - name: accessTokenGenerator
+  - name: access-token-generator
     applicationType: service
     endpoint: /access-token-generator
     configuration:
@@ -25,7 +25,7 @@ deployAs:
           description: Twilio account API Key
         - key: TWILIO_API_SECRET
           description: Twilio account API Secret
-  - name: notificationManager
+  - name: notification-manager
     applicationType: event
     endpoint: /notification-manager
     configuration:

@@ -1,5 +1,5 @@
 {
-  "name": "twilio-notification-manager",
+  "name": "@twilio-connector/notification-manager",
   "description": "A GCP function to generate twilio chat tokens",
   "version": "1.0.0",
   "license": "MIT",
