@@ -1,4 +1,5 @@
 node_modules
 build/
 .nvmrc
-.env
+.env.local
+!.env
