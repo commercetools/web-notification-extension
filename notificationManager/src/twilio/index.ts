@@ -3,8 +3,8 @@ import axios from 'axios';
 import { logger } from '../utils/logger.utils';
 
 const { username, password, accessTokenServiceUrl } = {
-  username: process.env.CTP_NOTIFIER_USERNAME || '',
-  password: process.env.CTP_NOTIFIER_PASSWORD || '',
+  username: process.env.CT_NOTIFIER_USERNAME || '',
+  password: process.env.CT_NOTIFIER_PASSWORD || '',
   accessTokenServiceUrl: process.env.ACCESS_TOKEN_SERVICE_URL || '',
 };
 async function getToken() {

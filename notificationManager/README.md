@@ -16,7 +16,7 @@ Deploy and run [twilio-access-token-generator](../access-token/README.md) to GCP
 Store your API credentials in the .env file
 
 ### Notifier username/password
-Store customer's username and password in `CTP_NOTIFIER_USERNAME` and `CTP_NOTIFIER_PASSWORD`
+Store customer's username and password in `CT_NOTIFIER_USERNAME` and `CT_NOTIFIER_PASSWORD`
 
 ## Configure the app to send notifications
 Populate the constant `SUPPORTED_MESSAGE_TYPES` in index.js. The schema for this constant is 
