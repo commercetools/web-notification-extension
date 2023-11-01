@@ -47,6 +47,6 @@ export const extractIdentity = async (message: MessagePayload) => {
   return identity;
 };
 
-export const parseMessage = (data: CloudEventsPayload) => {
-  return data.data;
+export const parseMessage = (data: CloudEventsPayload): MessagePayload => {
+  return data.data as unknown as MessagePayload;
 };

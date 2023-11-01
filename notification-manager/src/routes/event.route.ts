@@ -11,7 +11,6 @@ const serviceRouter = Router();
 
 serviceRouter.post('/', async (req, res) => {
   logger.info('Event message received');
-  // logger.info(JSON.stringify(req.body));
 
   const message = parseMessage(req.body);
   const customerIdentity = await extractIdentity(message);
