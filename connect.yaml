@@ -21,8 +21,6 @@ deployAs:
           description: commercetools Composable Commerce client scope
         - key: PUSH_CREDENTIAL_SID
           description: Firebase service key token
-        - key: TWILIO_AUTH_TOKEN
-          description: Account auth token of your twilio account
         - key: TWILIO_API_KEY
           description: Twilio account API Key
         - key: TWILIO_API_SECRET
