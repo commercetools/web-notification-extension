@@ -37,7 +37,7 @@ deployAs:
         - key: CTP_NOTIFIER_USERNAME
           description: Username of MC customer account that sends notifications
         - key: ACCESS_TOKEN_SERVICE_URL
-          description: commercetools Composable Commerce API region
+          description: Access token generator service URL
       securedConfiguration:
         - key: CTP_PROJECT_KEY
           description: commercetools Composable Commerce project key
