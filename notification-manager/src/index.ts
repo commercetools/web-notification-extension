@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Define routes
-app.use('/notificationManager', EventRoutes);
+app.use('/notification-manager', EventRoutes);
 
 // Global error handler
 app.use(errorMiddleware);

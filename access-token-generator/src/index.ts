@@ -22,12 +22,12 @@ const PORT = 8080;
 const app: Express = express();
 app.disable('x-powered-by');
 
-// Define configurations
+// Define configurationsF 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Define routes
-app.use('/accessTokenGenerator', ServiceRoutes);
+app.use('/access-token-generator', ServiceRoutes);
 
 // Global error handler
 app.use(errorMiddleware);
