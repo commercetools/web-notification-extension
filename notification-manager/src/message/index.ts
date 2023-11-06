@@ -47,6 +47,10 @@ export const extractIdentity = async (message: MessagePayload) => {
   return identity;
 };
 
-export const parseMessage = (data: CloudEventsPayload): MessagePayload => {
-  return data.data as unknown as MessagePayload;
+export const parseMessage = (data: {data:string}): MessagePayload => {
+  const pubSubMessage = data;
+  const message = pubSubMessage.data
+    ? Buffer.from(pubSubMessage.data, "base64").toString()
+    : undefined;
+  return message && JSON.parse(message);
 };
