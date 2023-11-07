@@ -1,13 +1,20 @@
-import {
-  CloudEventsPayload,
-  MessagePayload,
-} from '@commercetools/platform-sdk';
+import { MessagePayload } from '@commercetools/platform-sdk';
 import { SUPPORTED_MESSAGE_TYPES } from '../message-types';
 import { logger } from '../utils/logger.utils';
 import {
   IdentityExtractor,
   PayloadIntersection,
 } from '../interfaces/message.interface';
+
+const decodeToString = (encodedMessageBody: string) => {
+  const buff = Buffer.from(encodedMessageBody, 'base64');
+  return buff.toString().trim();
+};
+
+export const decodeToJson = (encodedMessageBody: string) => {
+  const decodedString = decodeToString(encodedMessageBody);
+  return JSON.parse(decodedString);
+};
 
 export const extractMessageType = (message: MessagePayload) => {
   if (!message.type) {
@@ -47,10 +54,11 @@ export const extractIdentity = async (message: MessagePayload) => {
   return identity;
 };
 
-export const parseMessage = (data: {data:string}): MessagePayload => {
-  const pubSubMessage = data;
-  const message = pubSubMessage.data
-    ? Buffer.from(pubSubMessage.data, "base64").toString()
-    : undefined;
-  return message && JSON.parse(message);
+export const parseMessage = (body: {
+  message: { data: string };
+}): MessagePayload => {
+  const encodedMessageBody = body.message?.data || '';
+  const messageBody = decodeToJson(encodedMessageBody);
+
+  return messageBody;
 };
