@@ -20,6 +20,7 @@ serviceRouter.post('/', async (req, res) => {
     return null;
   }
   const notification = await createNotification(message);
+  logger.info('notification created' + JSON.stringify(notification));
   await sendNotification(initializeClient, notification, customerIdentity);
   res.status(200);
   res.send();

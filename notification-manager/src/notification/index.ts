@@ -8,11 +8,12 @@ export const initializeClient = (() => {
   return initializeTwilio().then((c) => c);
 })();
 const findConversation = async (client: any, identity: any) => {
-  logger.info('getting conv');
+  logger.info('findConversation');
   try {
     const conversation = await client.getConversationByUniqueName(identity);
     return conversation;
   } catch {
+    logger.info('get conversation error');
     return null;
   }
 };
@@ -31,30 +32,29 @@ export const sendNotification = async (
   identity: any
 ) => {
   if (!clientPromise) {
-    logger.info('No client');
+    logger.info('No client promise');
     return;
   }
   const client = await clientPromise;
 
   let conversation = await findConversation(client, identity);
   if (!conversation) {
-    logger.info('no conversation found');
+    logger.info('no conversation found, creating one');
     conversation = await createConversation(client, identity);
   }
-  const participantsCount = await conversation.getParticipantsCount();
-  if (participantsCount < 2) {
-    try {
-      await conversation.add(identity);
-      logger.info('added customer');
-    } catch {
-      logger.info('customer already exists');
-    }
-    try {
-      await conversation.join();
-      logger.info('joined my self');
-    } catch {
-      logger.info("I'm already there");
-    }
+  logger.info('conversation found!');
+
+  try {
+    await conversation.add(identity);
+    logger.info('added customer');
+  } catch {
+    logger.info('customer already exists');
+  }
+  try {
+    await conversation.join();
+    logger.info('joined my self');
+  } catch {
+    logger.info("I'm already there");
   }
 
   logger.info('sending message');
