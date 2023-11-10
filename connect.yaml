@@ -1,0 +1,49 @@
+deployAs:
+  - name: access-token-generator
+    applicationType: service
+    endpoint: /access-token-generator
+    configuration:
+      standardConfiguration:
+        - key: CTP_REGION
+          description: commercetools Composable Commerce API region
+        - key: TWILIO_ACCOUNT_SID
+          description: Account SID of your Twilio account
+        - key: TWILIO_CHAT_SERVICE_SID
+          description: Unique identifier for a Chat Service instance
+      securedConfiguration:
+        - key: CTP_PROJECT_KEY
+          description: commercetools Composable Commerce project key
+        - key: CTP_CLIENT_ID
+          description: commercetools Composable Commerce client ID
+        - key: CTP_CLIENT_SECRET
+          description: commercetools Composable Commerce client secret
+        - key: CTP_SCOPE
+          description: commercetools Composable Commerce client scope
+        - key: PUSH_CREDENTIAL_SID
+          description: Firebase service key token
+        - key: TWILIO_API_KEY
+          description: Twilio account API Key
+        - key: TWILIO_API_SECRET
+          description: Twilio account API Secret
+  - name: notification-manager
+    applicationType: event
+    endpoint: /notification-manager
+    configuration:
+      standardConfiguration:
+        - key: CTP_REGION
+          description: commercetools Composable Commerce API region
+        - key: CT_NOTIFIER_USERNAME
+          description: Username of MC customer account that sends notifications
+        - key: ACCESS_TOKEN_SERVICE_URL
+          description: Access token generator service URL
+      securedConfiguration:
+        - key: CTP_PROJECT_KEY
+          description: commercetools Composable Commerce project key
+        - key: CTP_CLIENT_ID
+          description: commercetools Composable Commerce client ID
+        - key: CTP_CLIENT_SECRET
+          description: commercetools Composable Commerce client secret
+        - key: CTP_SCOPE
+          description: commercetools Composable Commerce client scope
+        - key: CT_NOTIFIER_PASSWORD
+          description: Password of MC customer account that sends notifications
