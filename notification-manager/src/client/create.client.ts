@@ -14,7 +14,6 @@ export const createApiRoot = ((root?: ByProjectKeyRequestBuilder) => () => {
   if (root) {
     return root;
   }
-  logger.info(JSON.stringify(readConfiguration()));
 
   root = createApiBuilderFromCtpClient(createClient()).withProjectKey({
     projectKey: readConfiguration().projectKey,
