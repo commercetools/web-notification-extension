@@ -71,11 +71,11 @@ export const createNotification = async (message: any) => {
     return null;
   }
   const getNotificationBody =
-    SUPPORTED_MESSAGE_TYPES[messageType].getNotificationBody;
+    SUPPORTED_MESSAGE_TYPES[messageType]?.getNotificationBody;
   const getNotificationSubject =
-    SUPPORTED_MESSAGE_TYPES[messageType].getNotificationSubject;
+    SUPPORTED_MESSAGE_TYPES[messageType]?.getNotificationSubject;
   return {
-    body: getNotificationBody(message),
-    subject: getNotificationSubject(message),
+    body: getNotificationBody?.(message),
+    subject: getNotificationSubject?.(message),
   };
 };

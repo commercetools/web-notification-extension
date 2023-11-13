@@ -2,7 +2,6 @@ import { MessagePayload } from '@commercetools/platform-sdk';
 import { SUPPORTED_MESSAGE_TYPES } from '../message-types';
 import { logger } from '../utils/logger.utils';
 import {
-  IdentityExtractor,
   PayloadIntersection,
 } from '../interfaces/message.interface';
 
@@ -28,10 +27,10 @@ export const isMessageTypeSupported = (messageType: string) => {
 };
 
 const predicatePassed = (message: MessagePayload, messageType: string) => {
-  if (!SUPPORTED_MESSAGE_TYPES[messageType].predicate) {
+  if (!SUPPORTED_MESSAGE_TYPES[messageType]?.predicate) {
     return true;
   }
-  return SUPPORTED_MESSAGE_TYPES[messageType].predicate?.(
+  return SUPPORTED_MESSAGE_TYPES[messageType]?.predicate?.(
     message as PayloadIntersection
   );
 };
@@ -48,8 +47,11 @@ export const extractIdentity = async (message: MessagePayload) => {
     logger.info('predicate failed');
     return null;
   }
-  const identityExtractor: IdentityExtractor =
-    SUPPORTED_MESSAGE_TYPES[messageType].identityExtractor;
+  const identityExtractor =
+    SUPPORTED_MESSAGE_TYPES[messageType]?.identityExtractor;
+    if (!identityExtractor) {
+      return null;
+    }
   const identity = await identityExtractor(message as PayloadIntersection);
   return identity;
 };

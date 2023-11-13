@@ -4,7 +4,6 @@ import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 import { readConfiguration } from '../utils/config.utils';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
-import { logger } from '../utils/logger.utils';
 
 /**
  * Create client with apiRoot
