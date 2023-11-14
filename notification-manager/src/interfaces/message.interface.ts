@@ -1,5 +1,5 @@
 import {
-  CustomerReference,
+  Message,
   QuoteCreatedMessagePayload,
   QuoteRequestStateChangedMessage,
   StagedQuoteCreatedMessagePayload,
@@ -17,19 +17,22 @@ export type MessageTypeReturn = {
   identityExtractor: IdentityExtractor;
   getNotificationBody: (message?: PayloadIntersection) => string | null;
   getNotificationSubject: (message?: PayloadIntersection) => string;
-  predicate?: (message: any) => (message: any, predicate: string) => boolean;
+  predicate?: (message: Message) => (message: Message, predicate: string) => boolean;
 };
 
-export interface SupportedMessageTypes {
-  [key: string]: MessageTypeReturn | null;
+export type SupportedMessageTypeMap = {
+  [key : string]: MessageTypeReturn | null;
+};
+
+export type SupportedEndpoints = 'quotes' | 'quoteRequests' | 'stagedQuotes';
+export type SupportedMessageTypes = 'StagedQuoteCreated' | 'QuoteCreated' | 'QuoteRequestStateChanged';
+
+export interface SupportedMessageJsonItem {
+  type: string;
+  subject: string;
+  useCustomIdentity?: boolean;
+  customIdentity?: string;
+  body: string;
+  predicate?: string;
 }
 
-export interface SupportedIdentityExtractorReturn {
-  label: string;
-  callback: (customerReference: CustomerReference) => Promise<string | null>;
-}
-
-export interface ReferenceExtractorFunctionReturn {
-  customerCallback: (object: any) => any | undefined;
-  objectCallback: (object: any) => any | undefined;
-}
