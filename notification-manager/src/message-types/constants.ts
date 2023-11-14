@@ -14,3 +14,4 @@ export const MapMessageTypeToObjectEndpoint: Record<SupportedMessageTypes, { obj
     endpoint: 'quoteRequests',
   },
 };
+

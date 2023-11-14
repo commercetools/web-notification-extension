@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { extractMessageType, isMessageTypeSupported } from '../message';
-import { SUPPORTED_MESSAGE_TYPES } from '../message-types';
+import { getSupportedMessageTypes } from '../message-types';
 import { initializeTwilio } from '../twilio';
 import { logger } from '../utils/logger.utils';
 
@@ -70,10 +70,12 @@ export const createNotification = async (message: any) => {
   if (!isMessageTypeSupported(messageType)) {
     return null;
   }
+  const supportedMesageTypes = getSupportedMessageTypes();
+
   const getNotificationBody =
-    SUPPORTED_MESSAGE_TYPES[messageType]?.getNotificationBody;
+    supportedMesageTypes[messageType]?.getNotificationBody;
   const getNotificationSubject =
-    SUPPORTED_MESSAGE_TYPES[messageType]?.getNotificationSubject;
+    supportedMesageTypes[messageType]?.getNotificationSubject;
   return {
     body: getNotificationBody?.(message),
     subject: getNotificationSubject?.(message),

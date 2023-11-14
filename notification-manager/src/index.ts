@@ -10,6 +10,7 @@ import { logger } from './utils/logger.utils';
 
 import { readConfiguration } from './utils/config.utils';
 import { errorMiddleware } from './middleware/error.middleware';
+import { initializeMessagesConfiguration } from './message-types/supportedMessageFetcher';
 
 // Read env variables
 readConfiguration();
@@ -19,6 +20,9 @@ const PORT = 8080;
 // Create the express app
 const app: Express = express();
 app.disable('x-powered-by');
+
+// initialize supported messages
+initializeMessagesConfiguration();
 
 // Define configurations
 app.use(bodyParser.json());
