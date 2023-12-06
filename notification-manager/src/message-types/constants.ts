@@ -1,6 +1,10 @@
-import { SupportedEndpoints, SupportedMessageTypes } from '../interfaces/message.interface';
+import { SupportedEndpoints, SupportedMessageTypes } from "../interfaces/message.interface";
 
-export const MapMessageTypeToObjectEndpoint: Record<SupportedMessageTypes, { object: string; endpoint: SupportedEndpoints; }> = {
+
+export const MapMessageTypeToObjectEndpoint: Record<
+  SupportedMessageTypes,
+  { object: string; endpoint: SupportedEndpoints }
+> = {
   StagedQuoteCreated: {
     object: 'stagedQuote',
     endpoint: 'stagedQuotes',
@@ -15,3 +19,11 @@ export const MapMessageTypeToObjectEndpoint: Record<SupportedMessageTypes, { obj
   },
 };
 
+export const MapResourceTypeToSupportedMessageTypes: Record<
+  string,
+  SupportedMessageTypes[]
+> = {
+  'staged-quote': ['StagedQuoteCreated'],
+  quote: ['QuoteCreated'],
+  'quote-request': ['QuoteRequestStateChanged'],
+};

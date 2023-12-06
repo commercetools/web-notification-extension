@@ -36,6 +36,14 @@ deployAs:
           description: Username of MC customer account that sends notifications
         - key: ACCESS_TOKEN_SERVICE_URL
           description: Access token generator service URL
+        - key: CONFIGURATOR_CUSTOM_OBJECT_CONTAINER
+          description: Translation memory container stored in custom objects
+          required: true
+          default: 'mc-twilio-notification-container'
+        - key: CONFIGURATOR_CUSTOM_OBJECT_KEY
+          description: Translation memory object key
+          required: true
+          default: 'supported_message_configuration'
       securedConfiguration:
         - key: CTP_PROJECT_KEY
           description: commercetools Composable Commerce project key
@@ -47,3 +55,37 @@ deployAs:
           description: commercetools Composable Commerce client scope
         - key: CT_NOTIFIER_PASSWORD
           description: Password of MC customer account that sends notifications
+  - name: configurator
+    applicationType: configurator
+    endpoint: /
+    configuration:
+      standardConfiguration:
+        standardConfiguration:
+        - key: CTP_REGION
+          description: commercetools Composable Commerce API region
+        - key: CONFIGURATOR_CUSTOM_OBJECT_CONTAINER
+          description: Translation memory container stored in custom objects
+          required: true
+          default: 'mc-twilio-notification-container'
+        - key: CONFIGURATOR_CUSTOM_OBJECT_KEY
+          description: Translation memory object key
+          required: true
+          default: 'supported_message_configuration'
+        - key: SUBSCRIPTION_KEY
+          description: Subscription key
+          required: true
+          default: 'twilio_subscription'
+        - key: NOTIFICATION_MANAGER_TOPIC
+          description: The queue name of the notification manager
+          required: true
+        - key: NOTIFICATION_MANAGER_PROJECT_KEY
+          description: The project key of the notification manager
+          required: true
+      securedConfiguration:
+        - key: CTP_PROJECT_KEY
+          description: commercetools Composable Commerce project key
+        - key: CTP_CLIENT_ID
+          description: commercetools Composable Commerce client ID
+        - key: CTP_CLIENT_SECRET
+          description: commercetools Composable Commerce client secret
+        - key: CTP_SCOPE

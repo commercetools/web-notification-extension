@@ -1,0 +1,15 @@
+mutation create($key: String!, $projectID: String!, $topic: String!, $messages: [MessageSubscriptionInput!]) {
+  createSubscription(draft: {key: $key, destination: {GoogleCloudPubSub: {projectId: $projectID, topic: $topic}}, messages: $messages}) {
+    destination {
+      type
+      ... on GoogleCloudPubSubDestination {
+        projectId
+        topic
+      }
+    }
+    messages {
+      resourceTypeId
+      types
+    }
+  }
+}

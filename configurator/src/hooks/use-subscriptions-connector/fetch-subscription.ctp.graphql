@@ -1,0 +1,16 @@
+query FetchSubscriptions($key: String!) {
+  subscription(key: $key){
+    destination {
+      type
+      ...on GoogleCloudPubSubDestination {
+        projectId
+        topic
+      }
+    }
+    messages {
+      resourceTypeId
+      types
+    }
+    
+  }
+}

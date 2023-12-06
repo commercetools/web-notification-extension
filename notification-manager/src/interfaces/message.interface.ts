@@ -26,6 +26,7 @@ export type SupportedMessageTypeMap = {
 
 export type SupportedEndpoints = 'quotes' | 'quoteRequests' | 'stagedQuotes';
 export type SupportedMessageTypes = 'StagedQuoteCreated' | 'QuoteCreated' | 'QuoteRequestStateChanged';
+export type SupportedResources = 'quote' | 'quote-request' | 'staged-quote';
 
 export interface MessageConfigurationItem {
   type: string;

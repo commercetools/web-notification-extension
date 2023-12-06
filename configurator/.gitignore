@@ -1,0 +1,15 @@
+node_modules
+public
+dist
+!.env
+.env.local
+# Common IDEs and editors
+**/.idea
+.vscode
+.history
+*.swp
+.envrc
+
+# Common file browsers
+.DS_Store
+Thumbs.db*
